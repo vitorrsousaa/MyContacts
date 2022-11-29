@@ -7,14 +7,14 @@
 ## Tópicos
 
 <div>
- • <a href="#-sobre-o-MyContacts">Sobre o MyContacts</a> </br>
- • <a href="#-tecnologias">Tecnologias</a> </br>
- • <a href="#-layout">Layout</a> </br>
- • <a href="#-funcionalidades">Funcionalidades</a> </br>
- • <a href="#-como-executar-o-projeto">Como executar</a> </br>
- • <a href="#-como-contribuir">Como contribuir</a> </br>
- • <a href="#-autor">Autor</a> </br>
- • <a href="#user-content--licença">Licença</a></br>
+ • <a href="#-sobre-o-MyContacts"> 📱 Sobre o MyContacts</a> </br>
+ • <a href="#-tecnologias"> 🚀 Tecnologias</a> </br>
+ • <a href="#-layout"> 🎨 Layout</a> </br>
+ • <a href="#-funcionalidades">⚙️ Funcionalidades</a> </br>
+ • <a href="#-como-executar-o-projeto">🚀 Como executar</a> </br>
+ • <a href="#-como-contribuir">💭 Como contribuir</a> </br>
+ • <a href="#-entre-em-contato">📮 Entre em contato</a> </br>
+ • <a href="#user-content--licença">📝 Licença</a></br>
 </div>
 
 <br />
