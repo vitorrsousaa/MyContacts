@@ -1,10 +1,4 @@
-import {
-  Card,
-  Container,
-  Header,
-  InputSearchContainer,
-  ListContainer,
-} from './styles';
+import { Card, Container, Header, InputSearchContainer, ListContainer } from './styles';
 
 import arrow from '../../assets/images/icons/arrow.svg';
 import trash from '../../assets/images/icons/trash.svg';
@@ -15,9 +9,8 @@ import Modal from '../../components/Modal';
 const Home = () => {
   return (
     <>
+      <Modal danger />
       <Container>
-        <Modal danger />
-
         <InputSearchContainer>
           <input type="text" placeholder="Pesquisar contato" />
         </InputSearchContainer>

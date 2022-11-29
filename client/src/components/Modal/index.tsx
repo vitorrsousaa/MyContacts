@@ -1,12 +1,22 @@
+import ReactDOM from 'react-dom';
 import Button from '../Button';
 import { Overlay, Container, Footer } from './styles';
 
 interface ModalProps {
   danger?: boolean;
+  containerId?: string;
 }
 
-const Modal = ({ danger = false }: ModalProps) => {
-  return (
+const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
+  let container = document.getElementById(containerId);
+
+  if (!container) {
+    container = document.createElement('div');
+    container.setAttribute('id', containerId);
+    document.body.appendChild(container);
+  }
+
+  return ReactDOM.createPortal(
     <Overlay>
       <Container danger={danger}>
         <h1>Título do modal</h1>
@@ -20,7 +30,8 @@ const Modal = ({ danger = false }: ModalProps) => {
           </Button>
         </Footer>
       </Container>
-    </Overlay>
+    </Overlay>,
+    container
   );
 };
 
