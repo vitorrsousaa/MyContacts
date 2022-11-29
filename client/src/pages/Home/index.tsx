@@ -5,9 +5,11 @@ import {
   InputSearchContainer,
   ListContainer,
 } from './styles';
+
 import arrow from '../../assets/images/icons/arrow.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import edit from '../../assets/images/icons/edit.svg';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -19,7 +21,7 @@ const Home = () => {
 
         <Header>
           <strong>3 contatos</strong>
-          <a href="">Novo contato</a>
+          <Link to="/new">Novo contato</Link>
         </Header>
 
         <ListContainer>
@@ -41,9 +43,9 @@ const Home = () => {
             </div>
 
             <div className="actions">
-              <a href="">
+              <Link to="/edit/mateus">
                 <img src={edit} alt="Edit" />
-              </a>
+              </Link>
               <button type="button">
                 <img src={trash} alt="Trash" />
               </button>

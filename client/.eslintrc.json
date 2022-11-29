@@ -22,6 +22,8 @@
     "linebreak-style": ["error", "windows"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "no-empty-pattern": "warn"
   }
 }
