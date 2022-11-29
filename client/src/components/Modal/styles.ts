@@ -29,8 +29,7 @@ export const Container = styled.div<ContainerProps>`
   h1 {
     font-size: 22px;
     font-weight: bold;
-    color: ${({ theme, danger }) =>
-      danger ? theme.colors.danger.main : theme.colors.gray.dark};
+    color: ${({ theme, danger }) => (danger ? theme.colors.danger.main : theme.colors.gray.dark)};
   }
 
   p {
