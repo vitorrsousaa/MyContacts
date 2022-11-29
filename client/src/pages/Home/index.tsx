@@ -5,11 +5,13 @@ import trash from '../../assets/images/icons/trash.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
+import Loader from '../../components/Loader';
 
 const Home = () => {
   return (
     <>
-      <Modal danger />
+      {/* <Loader /> */}
+      {/* <Modal danger /> */}
       <Container>
         <InputSearchContainer>
           <input type="text" placeholder="Pesquisar contato" />
