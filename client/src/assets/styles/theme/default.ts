@@ -13,5 +13,10 @@ export const theme: DefaultTheme = {
       dark: '#222',
       light: '#BCBCBC',
     },
+    danger: {
+      main: '#FC5050',
+      dark: '#F63131',
+      light: '#F97171',
+    },
   },
 };

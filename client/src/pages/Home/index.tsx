@@ -10,11 +10,14 @@ import arrow from '../../assets/images/icons/arrow.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import { Link } from 'react-router-dom';
+import Modal from '../../components/Modal';
 
 const Home = () => {
   return (
     <>
       <Container>
+        <Modal danger />
+
         <InputSearchContainer>
           <input type="text" placeholder="Pesquisar contato" />
         </InputSearchContainer>

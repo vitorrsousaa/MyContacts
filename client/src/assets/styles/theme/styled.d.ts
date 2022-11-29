@@ -14,6 +14,11 @@ declare module 'styled-components' {
         light: string;
         dark: string;
       };
+      danger: {
+        main: string;
+        light: string;
+        dark: string;
+      };
     };
   }
 }

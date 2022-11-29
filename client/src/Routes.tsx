@@ -6,8 +6,12 @@ import EditContact from './pages/EditContact';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" component={Home} exact />
-      <Route path="/new" component={NewContact} />
+      <Route path="/" exact>
+        <Home />
+      </Route>
+      <Route path="/new">
+        <NewContact />
+      </Route>
       <Route path="/edit/:id" component={EditContact} />
     </Switch>
   );
