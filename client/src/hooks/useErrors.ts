@@ -25,4 +25,10 @@ export default function useErrors() {
   function getErrorMessageByFieldName(fieldName: string) {
     return errors.find((error) => error.field === fieldName)?.message;
   }
+
+  return {
+    setError,
+    removeError,
+    getErrorMessageByFieldName,
+  };
 }
