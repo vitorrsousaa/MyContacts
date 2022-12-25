@@ -1,5 +1,6 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
 import useErrors from '../../hooks/useErrors';
+import formatPhone from '../../utils/formatPhone';
 import isEmailValid from '../../utils/isEmailValid';
 import Button from '../Button';
 import FormGroup from '../FormGroup';
@@ -38,13 +39,18 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
     }
   }
 
+  function handlePhoneChange(event: BaseSyntheticEvent) {
+    setPhone(formatPhone(event.target.value));
+  }
+
   function handleSubmit(event: React.SyntheticEvent) {
-    console.log(event);
     event.preventDefault();
+
+    console.log({ name, email, phone: phone.replace(/\D/g, ''), category });
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
           placeholder="Nome"
@@ -68,7 +74,8 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
           placeholder="Telefone"
           type="text"
           value={phone}
-          onChange={(event) => setPhone(event.target.value)}
+          onChange={handlePhoneChange}
+          // maxLength="15"
         />
       </FormGroup>
 

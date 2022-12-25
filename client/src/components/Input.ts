@@ -14,6 +14,7 @@ export default styled.input<InputProps>`
   height: 52px;
 
   outline: none;
+  appearance: none;
 
   padding: 0 16px;
   font-size: 16px;
