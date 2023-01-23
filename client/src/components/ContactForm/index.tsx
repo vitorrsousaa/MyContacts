@@ -17,7 +17,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  const { setError, removeError, getErrorMessageByFieldName } = useErrors();
+  const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors();
+
+  const isFormValid = name && errors.length === 0;
 
   function handleNameChange(event: BaseSyntheticEvent) {
     setName(event.target.value);
@@ -75,7 +77,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
           type="text"
           value={phone}
           onChange={handlePhoneChange}
-          // maxLength="15"
+          maxLength={15}
         />
       </FormGroup>
 
@@ -87,7 +89,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
         </Select>
       </FormGroup>
       <ButtonContainer>
-        <Button type="submit">{buttonLabel}</Button>
+        <Button type="submit" disabled={!isFormValid}>
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </Form>
   );

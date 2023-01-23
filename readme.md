@@ -11,6 +11,7 @@
  • <a href="#-tecnologias"> 🚀 Tecnologias</a> </br>
  • <a href="#-layout"> 🎨 Layout</a> </br>
  • <a href="#-funcionalidades">⚙️ Funcionalidades</a> </br>
+ • <a href="#-estrutura-de-pastas">📂 Estrutura de pastas</a> </br>
  • <a href="#-como-executar-o-projeto">🚀 Como executar</a> </br>
  • <a href="#-como-contribuir">💭 Como contribuir</a> </br>
  • <a href="#-entre-em-contato">📮 Entre em contato</a> </br>
@@ -73,6 +74,17 @@ A rota para adicionar um novo contato vai fazer a conexão entre a nossa aplica�
 E a última rota é para realizar modificões em um contato já existe, através de um formulário parecido com o formulário que visualizamos na roda para adicionar um novo contato.
 
 <br />
+
+## 📂 Estrutura de pastas
+
+Afim de facilitar a organização e manutenção do código, foi definido um padrão para organização das pastas neste projeto.
+
+**Front-end Web**
+Todo o código responsável por carregar a aplicação Front-end esta armazenado dentro da pasta client
+→ assets: Contém a estilização global, icones, tema da aplicação, itens de estilo que são reutilizáveis e imagens;
+→ components: Contém todos os componentes globais do projeto;
+→ hooks: Contém todos os custom hooks criados para usabilidade da aplicação;
+→ pages: Contém todos os componentes responsáveis por carregar cada página da aplicação;
 
 ## 🚀 Como executar o projeto
 
