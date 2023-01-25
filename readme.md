@@ -86,6 +86,12 @@ Todo o código responsável por carregar a aplicação Front-end esta armazenado
 → hooks: Contém todos os custom hooks criados para usabilidade da aplicação;
 → pages: Contém todos os componentes responsáveis por carregar cada página da aplicação;
 
+**Back-end**
+Todo o código responsável por carregar a aplicação Back-end esta armazenado dentro da pasta api
+→ controllers:
+→ repositories:
+→ middlewares: Os middlewares são responsáveis por interceptar a Request antes de chegar no Controller. E além disso, o middleware consegue alterar o lifeCycle da aplicação, deixando a Request seguir o lifeCycle ou encaminhar para outro local
+
 ## 🚀 Como executar o projeto
 
 Este projeto é divido em duas partes:
