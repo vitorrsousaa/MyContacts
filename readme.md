@@ -88,8 +88,8 @@ Todo o código responsável por carregar a aplicação Front-end esta armazenado
 
 **Back-end**
 Todo o código responsável por carregar a aplicação Back-end esta armazenado dentro da pasta api
-→ controllers:
-→ repositories:
+→ controllers: Os controllers são repsonsáveis por armazenar a regra de negócio da aplicação, realizando a integração da View com o DataSource através do Repository.
+→ repositories: Os repositories são uma camada de abstração para acesso ao DataSource. Ele é responsável por lidar com as solicitações do controller para comunicação com o dataSource
 → middlewares: Os middlewares são responsáveis por interceptar a Request antes de chegar no Controller. E além disso, o middleware consegue alterar o lifeCycle da aplicação, deixando a Request seguir o lifeCycle ou encaminhar para outro local
 
 ## 🚀 Como executar o projeto
