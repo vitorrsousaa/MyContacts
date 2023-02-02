@@ -1,11 +1,11 @@
-const { uuid } = require('uuidv4');
+import { v4 as uuidv4 } from 'uuid';
 
 let contacts = [
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Mateus',
     email: 'mateus@gtes.com',
-    category_id: uuid(),
+    category_id: uuidv4(),
     phone: '21998217463',
   },
 ];
@@ -41,7 +41,7 @@ class ContactsRepository {
   create({ name, email, phone, category_id }: createProps) {
     return new Promise((resolve) => {
       const newContact = {
-        id: uuid(),
+        id: uuidv4(),
         name,
         email,
         phone,
@@ -57,7 +57,7 @@ class ContactsRepository {
   update(id: string, { name, email, phone, category_id }: createProps) {
     return new Promise((resolve) => {
       const updateContact = {
-        id: uuid(),
+        id: uuidv4(),
         name,
         email,
         phone,
