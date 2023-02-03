@@ -24,3 +24,6 @@ app.listen(3000, () => console.log('Server started at port 3000'));
 
 // Toda vez que ferimos a SOP, a Request passa a ser do tipo CORS
 // Para utilizar a Request pelo front e resolver o problema do CORS, precisamos passar no Header que a origem é confiável
+
+// Preflight - Pré-voô
+// A requisição de preflight é executada primeiro pelo browser verificar quais as autorizações que possuem no back, e caso esteja autorizado, executamos a requisição completa

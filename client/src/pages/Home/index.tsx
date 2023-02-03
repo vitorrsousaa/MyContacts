@@ -6,8 +6,32 @@ import edit from '../../assets/images/icons/edit.svg';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
+import { useEffect, useState } from 'react';
+
+interface Contact {
+  name: string;
+  email: string;
+  phone: string;
+  category_id: string | null;
+  category_name: string | null;
+  id: string;
+}
 
 const Home = () => {
+  const [contacts, setContacts] = useState<Contact[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/contacts')
+      .then(async (response) => {
+        const json = await response.json();
+
+        setContacts(json);
+      })
+      .catch((error) => {
+        console.log('erro', error);
+      });
+  }, []);
+
   return (
     <>
       {/* <Loader /> */}
@@ -18,7 +42,9 @@ const Home = () => {
         </InputSearchContainer>
 
         <Header>
-          <strong>3 contatos</strong>
+          <strong>
+            {contacts.length} {contacts.length === 1 ? 'contato' : 'contatos'}
+          </strong>
           <Link to="/new">Novo contato</Link>
         </Header>
 
@@ -30,25 +56,27 @@ const Home = () => {
             </button>
           </header>
 
-          <Card>
-            <div className="info">
-              <div className="contact-name">
-                <strong>Mateus Silva</strong>
-                <small>instagram</small>
+          {contacts.map((contact) => (
+            <Card key={contact.id}>
+              <div className="info">
+                <div className="contact-name">
+                  <strong>{contact.name}</strong>
+                  {contact.category_name && <small>{contact.category_name}</small>}
+                </div>
+                <span>{contact.email}</span>
+                <span>{contact.phone}</span>
               </div>
-              <span>mateus@devacademy.com.br</span>
-              <span>(41) 99999-9999</span>
-            </div>
 
-            <div className="actions">
-              <Link to="/edit/mateus">
-                <img src={edit} alt="Edit" />
-              </Link>
-              <button type="button">
-                <img src={trash} alt="Trash" />
-              </button>
-            </div>
-          </Card>
+              <div className="actions">
+                <Link to={`/edit/${contact.id}`}>
+                  <img src={edit} alt="Edit" />
+                </Link>
+                <button type="button">
+                  <img src={trash} alt="Trash" />
+                </button>
+              </div>
+            </Card>
+          ))}
         </ListContainer>
       </Container>
     </>

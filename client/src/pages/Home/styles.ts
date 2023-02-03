@@ -62,7 +62,7 @@ export const ListContainer = styled.div`
       align-items: center;
 
       span {
-        margin-left: 8px;
+        margin-right: 8px;
         font-weight: bold;
         color: ${({ theme }) => theme.colors.primary.main};
       }
