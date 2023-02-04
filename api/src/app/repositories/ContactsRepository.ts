@@ -36,8 +36,34 @@ interface createProps {
 }
 
 class ContactsRepository {
-  findAll() {
-    return new Promise((resolve) => resolve(contacts));
+  findAll(orderBy = 'asc') {
+    function orderASC(a: any, b: any) {
+      if (a.name < b.name) {
+        return -1;
+      }
+
+      if (a.name > b.name) {
+        return 1;
+      }
+
+      return 0;
+    }
+
+    function orderDSC(a: any, b: any) {
+      if (a.name < b.name) {
+        return 1;
+      }
+
+      if (a.name > b.name) {
+        return -1;
+      }
+
+      return 0;
+    }
+
+    return new Promise((resolve) =>
+      resolve(contacts.sort(orderBy === 'asc' ? orderASC : orderDSC))
+    );
   }
 
   findById(id: string) {
