@@ -77,7 +77,7 @@ E a última rota é para realizar modificões em um contato já existe, através
 
 ## 📂 Estrutura de pastas
 
-Afim de facilitar a organização e manutenção do código, foi definido um padrão para organização das pastas neste projeto.
+Afim de facilitar a organização e manutenção do código, foi definido um padrão e modularização para organização das pastas neste projeto.
 
 **Front-end Web**
 Todo o código responsável por carregar a aplicação Front-end esta armazenado dentro da pasta client
@@ -85,6 +85,8 @@ Todo o código responsável por carregar a aplicação Front-end esta armazenado
 → components: Contém todos os componentes globais do projeto;
 → hooks: Contém todos os custom hooks criados para usabilidade da aplicação;
 → pages: Contém todos os componentes responsáveis por carregar cada página da aplicação;
+→ utils: Contém funções que são utilizadas repetidas vezes na aplicação;
+→ services: Contém as camadas de abstração para service layer de cada entidade da aplicação;
 
 **Back-end**
 Todo o código responsável por carregar a aplicação Back-end esta armazenado dentro da pasta api

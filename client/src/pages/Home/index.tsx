@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
 import { BaseSyntheticEvent, useEffect, useMemo, useState } from 'react';
-import delay from '../../utils/delay';
+import ContactsService from '../../services/ContactsService';
 
 interface Contact {
   name: string;
@@ -37,12 +37,9 @@ const Home = () => {
       try {
         setIsLoading(true);
 
-        const response = await fetch(`http://localhost:3000/contacts?orderBy=${orderBy}`);
+        const contactsList = await ContactsService.listContacts(orderBy);
 
-        await delay(500);
-
-        const json = await response.json();
-        setContacts(json);
+        setContacts(contactsList);
       } catch (error) {
         console.log(error);
       } finally {
