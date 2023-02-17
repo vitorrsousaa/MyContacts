@@ -39,9 +39,17 @@ const Home = () => {
 
         const contactsList = await ContactsService.listContacts(orderBy);
 
+        // Poderiamos utilizar esta forma para tratar o erro, mas isto implacaria em repetição que código, pois devemos exibir o erro caso caia no bloco catch tbm
+        // if(contactsList) {
+        //   setContacts(contactsList);
+        // } else {
+        //   console.log('Erro na API')
+        // }
+
         setContacts(contactsList);
       } catch (error) {
         console.log(error);
+        console.log('caiu no catch');
       } finally {
         setIsLoading(false);
       }
