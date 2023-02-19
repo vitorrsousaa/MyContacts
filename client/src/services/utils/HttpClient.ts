@@ -1,10 +1,16 @@
 import delay from '../../utils/delay';
+import APIError from '../../errors/APIError';
 
 class HttpClient {
+  baseURL;
+
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
+  }
   async get(path: string) {
     await delay(500);
 
-    const response = await fetch(`http://localhost:3000${path}`);
+    const response = await fetch(`${this.baseURL}${path}`);
 
     let body = null;
 
@@ -13,16 +19,14 @@ class HttpClient {
       body = await response.json();
     }
 
-    console.log(response);
-
     if (response.ok) {
       return body;
     }
 
     // return false;
 
-    throw new Error(body?.error || `${response.status} - ${response.statusText}`);
+    throw new APIError(response, body);
   }
 }
 
-export default new HttpClient();
+export default HttpClient;

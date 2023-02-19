@@ -13,6 +13,7 @@ declare module 'styled-components' {
       gray: {
         light: string;
         dark: string;
+        lighter: string;
       };
       danger: {
         main: string;

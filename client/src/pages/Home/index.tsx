@@ -1,13 +1,23 @@
-import { Card, Container, Header, InputSearchContainer, ListHeader } from './styles';
+import {
+  Card,
+  Container,
+  ErrorContainer,
+  Header,
+  InputSearchContainer,
+  ListHeader,
+} from './styles';
 
 import arrow from '../../assets/images/icons/arrow.svg';
+import sad from '../../assets/images/sad.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
-import { BaseSyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { BaseSyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import ContactsService from '../../services/ContactsService';
+
+import Button from '../../components/Button';
 
 interface Contact {
   name: string;
@@ -23,6 +33,7 @@ const Home = () => {
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const filteredContacts = useMemo(
     () =>
@@ -31,32 +42,40 @@ const Home = () => {
       ),
     [contacts, searchTerm]
   );
+  const loadContacts = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const contactsList = await ContactsService.listContacts(orderBy);
+
+      setContacts(contactsList);
+      setHasError(false);
+
+      // Poderiamos utilizar esta forma para tratar o erro, mas isto implacaria em repetição que código, pois devemos exibir o erro caso caia no bloco catch tbm
+      // if(contactsList) {
+      //   setContacts(contactsList);
+      // } else {
+      //   console.log('Erro na API')
+      // }
+    } catch (error) {
+      // if(error instanceof APIError){
+      //mostra uma mensagem para o usuário
+      // } else {
+      // mostra uma mensagem para o usuário
+      // Envia o erro para o serviço de log
+      // Erro do javascript
+      // }
+      // console.log(error);
+
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [orderBy]);
 
   useEffect(() => {
-    async function loadContacts() {
-      try {
-        setIsLoading(true);
-
-        const contactsList = await ContactsService.listContacts(orderBy);
-
-        // Poderiamos utilizar esta forma para tratar o erro, mas isto implacaria em repetição que código, pois devemos exibir o erro caso caia no bloco catch tbm
-        // if(contactsList) {
-        //   setContacts(contactsList);
-        // } else {
-        //   console.log('Erro na API')
-        // }
-
-        setContacts(contactsList);
-      } catch (error) {
-        console.log(error);
-        console.log('caiu no catch');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
     loadContacts();
-  }, [orderBy]);
+  }, [loadContacts]);
 
   function handleToggleOrderBy() {
     setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'));
@@ -64,6 +83,10 @@ const Home = () => {
 
   function handleChangeSearchTerm(event: BaseSyntheticEvent) {
     setSearchTerm(event.target.value);
+  }
+
+  function handleTryAgain() {
+    loadContacts();
   }
 
   return (
@@ -80,43 +103,62 @@ const Home = () => {
           />
         </InputSearchContainer>
 
-        <Header>
-          <strong>
-            {filteredContacts.length} {filteredContacts.length === 1 ? 'contato' : 'contatos'}
-          </strong>
+        <Header hasError={hasError}>
+          {!hasError && (
+            <strong>
+              {filteredContacts.length} {filteredContacts.length === 1 ? 'contato' : 'contatos'}
+            </strong>
+          )}
           <Link to="/new">Novo contato</Link>
         </Header>
 
-        {filteredContacts.length > 0 && (
-          <ListHeader orderBy={orderBy}>
-            <button type="button" onClick={handleToggleOrderBy}>
-              <span>Nome</span>
-              <img src={arrow} alt="Arrow" />
-            </button>
-          </ListHeader>
+        {hasError && (
+          <ErrorContainer>
+            <img src={sad} alt="sad" />
+            <div className="details">
+              <strong>Ocorreu um erro ao obter os seus contatos!</strong>
+
+              <Button type="button" onClick={handleTryAgain}>
+                Tentar novamente
+              </Button>
+            </div>
+          </ErrorContainer>
         )}
 
-        {filteredContacts.map((contact) => (
-          <Card key={contact.id}>
-            <div className="info">
-              <div className="contact-name">
-                <strong>{contact.name}</strong>
-                {contact.category_name && <small>{contact.category_name}</small>}
-              </div>
-              <span>{contact.email}</span>
-              <span>{contact.phone}</span>
-            </div>
+        {!hasError && (
+          <>
+            {filteredContacts.length > 0 && (
+              <ListHeader orderBy={orderBy}>
+                <button type="button" onClick={handleToggleOrderBy}>
+                  <span>Nome</span>
+                  <img src={arrow} alt="Arrow" />
+                </button>
+              </ListHeader>
+            )}
 
-            <div className="actions">
-              <Link to={`/edit/${contact.id}`}>
-                <img src={edit} alt="Edit" />
-              </Link>
-              <button type="button">
-                <img src={trash} alt="Trash" />
-              </button>
-            </div>
-          </Card>
-        ))}
+            {filteredContacts.map((contact) => (
+              <Card key={contact.id}>
+                <div className="info">
+                  <div className="contact-name">
+                    <strong>{contact.name}</strong>
+                    {contact.category_name && <small>{contact.category_name}</small>}
+                  </div>
+                  <span>{contact.email}</span>
+                  <span>{contact.phone}</span>
+                </div>
+
+                <div className="actions">
+                  <Link to={`/edit/${contact.id}`}>
+                    <img src={edit} alt="Edit" />
+                  </Link>
+                  <button type="button">
+                    <img src={trash} alt="Trash" />
+                  </button>
+                </div>
+              </Card>
+            ))}
+          </>
+        )}
       </Container>
     </>
   );

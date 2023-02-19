@@ -12,6 +12,7 @@ export const theme: DefaultTheme = {
     gray: {
       dark: '#222',
       light: '#BCBCBC',
+      lighter: '#e5e5e5',
     },
     danger: {
       main: '#FC5050',
