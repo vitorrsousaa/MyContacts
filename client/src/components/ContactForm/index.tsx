@@ -36,6 +36,8 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
       try {
         const categoriesList = await CategoriesService.listCategories();
 
+        // console.log(categoriesList);
+
         setCategories(categoriesList);
       } catch {
       } finally {

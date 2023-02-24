@@ -2,6 +2,11 @@ import delay from '../../utils/delay';
 import APIError from '../../errors/APIError';
 import { ContactData } from '../ContactsService';
 
+interface optionsProps {
+  method: string;
+  body?: any;
+}
+
 class HttpClient {
   baseURL;
 
@@ -9,37 +14,29 @@ class HttpClient {
     this.baseURL = baseURL;
   }
 
-  async get(path: string) {
-    await delay(1000);
-
-    const response = await fetch(`${this.baseURL}${path}`);
-
-    let body = null;
-
-    const contentType = response.headers.get('Content-Type');
-    if (contentType?.includes('application/json')) {
-      body = await response.json();
-    }
-
-    if (response.ok) {
-      return body;
-    }
-
-    // return false;
-
-    throw new APIError(response, body);
+  get(path: string) {
+    return this.makeRequest(path, { method: 'GET' });
   }
 
-  async post(path: string, body: ContactData) {
+  post(path: string, body: ContactData) {
+    return this.makeRequest(path, {
+      method: 'POST',
+      body,
+    });
+  }
+
+  async makeRequest(path: string, options: optionsProps) {
     await delay(1000);
 
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-    });
+    const headers = new Headers();
+
+    if (options.body) {
+      headers.append('Content-Type', 'application/json');
+    }
 
     const response = await fetch(`${this.baseURL}${path}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
+      method: options.method,
+      body: JSON.stringify(options.body),
       headers,
     });
 
