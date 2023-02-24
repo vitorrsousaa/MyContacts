@@ -1,5 +1,7 @@
-import React, { BaseSyntheticEvent, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import useErrors from '../../hooks/useErrors';
+import CategoriesService from '../../services/CategoriesService';
+import { FormData } from '../../pages/NewContact';
 import formatPhone from '../../utils/formatPhone';
 import isEmailValid from '../../utils/isEmailValid';
 import Button from '../Button';
@@ -10,16 +12,39 @@ import { Form, ButtonContainer } from './styles';
 
 interface ContactFormProps {
   buttonLabel: string;
+  onSubmit: (formData: FormData) => void;
 }
 
-const ContactForm = ({ buttonLabel }: ContactFormProps) => {
+interface Category {
+  id: string;
+  name: string;
+}
+
+const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState('');
   const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   const isFormValid = name && errors.length === 0;
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const categoriesList = await CategoriesService.listCategories();
+
+        setCategories(categoriesList);
+      } catch {
+      } finally {
+        setIsLoadingCategories(false);
+      }
+    }
+
+    loadCategories();
+  }, []);
 
   function handleNameChange(event: BaseSyntheticEvent) {
     setName(event.target.value);
@@ -48,7 +73,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    console.log({ name, email, phone: phone.replace(/\D/g, ''), category });
+    onSubmit({ name, email, phone: phone.replace(/\D/g, ''), categoryId });
   }
 
   return (
@@ -81,11 +106,18 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
         />
       </FormGroup>
 
-      <FormGroup>
-        <Select value={category} onChange={(event) => setCategory(event.target.value)}>
+      <FormGroup isLoading={isLoadingCategories}>
+        <Select
+          value={categoryId}
+          onChange={(event) => setCategoryId(event.target.value)}
+          disabled={isLoadingCategories}
+        >
           <option value="">Categoria</option>
-          <option value="instagram">Instagram</option>
-          <option value="discord">Discord</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </Select>
       </FormGroup>
       <ButtonContainer>
