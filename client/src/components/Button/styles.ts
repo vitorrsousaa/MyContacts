@@ -4,7 +4,10 @@ interface ButtonProps {
   danger?: boolean;
 }
 
-export default styled.button<ButtonProps>`
+export const ButtonStyled = styled.button<ButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 52px;
   padding: 0 16px;
   border: none;

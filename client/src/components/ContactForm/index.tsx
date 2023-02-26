@@ -4,15 +4,16 @@ import CategoriesService from '../../services/CategoriesService';
 import { FormData } from '../../pages/NewContact';
 import formatPhone from '../../utils/formatPhone';
 import isEmailValid from '../../utils/isEmailValid';
-import Button from '../Button';
+
 import FormGroup from '../FormGroup';
 import Input from '../Input';
 import Select from '../Select';
 import { Form, ButtonContainer } from './styles';
+import Button from '../Button';
 
 interface ContactFormProps {
   buttonLabel: string;
-  onSubmit: (formData: FormData) => void;
+  onSubmit: (formData: FormData) => Promise<void>;
 }
 
 interface Category {
@@ -25,9 +26,10 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors();
 
   const isFormValid = name && errors.length === 0;
 
@@ -36,10 +38,9 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
       try {
         const categoriesList = await CategoriesService.listCategories();
 
-        // console.log(categoriesList);
-
         setCategories(categoriesList);
       } catch {
+        //
       } finally {
         setIsLoadingCategories(false);
       }
@@ -72,10 +73,14 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
     setPhone(formatPhone(event.target.value));
   }
 
-  function handleSubmit(event: React.SyntheticEvent) {
+  async function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    onSubmit({ name, email, phone: phone.replace(/\D/g, ''), categoryId });
+    setIsSubmitting(true);
+
+    await onSubmit({ name, email, phone: phone.replace(/\D/g, ''), categoryId });
+
+    setIsSubmitting(false);
   }
 
   return (
@@ -87,6 +92,7 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
           value={name}
           onChange={handleNameChange}
           error={!!getErrorMessageByFieldName('name')}
+          disabled={isSubmitting}
         />
       </FormGroup>
       <FormGroup error={getErrorMessageByFieldName('email')}>
@@ -96,6 +102,7 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
           value={email}
           onChange={handleEmailChange}
           error={!!getErrorMessageByFieldName('email')}
+          disabled={isSubmitting}
         />
       </FormGroup>
       <FormGroup>
@@ -105,6 +112,7 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
           value={phone}
           onChange={handlePhoneChange}
           maxLength={15}
+          disabled={isSubmitting}
         />
       </FormGroup>
 
@@ -112,7 +120,7 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
         <Select
           value={categoryId}
           onChange={(event) => setCategoryId(event.target.value)}
-          disabled={isLoadingCategories}
+          disabled={isLoadingCategories || isSubmitting}
         >
           <option value="">Categoria</option>
           {categories.map((category) => (
@@ -123,7 +131,7 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
         </Select>
       </FormGroup>
       <ButtonContainer>
-        <Button type="submit" disabled={!isFormValid}>
+        <Button type="submit" isLoading={isSubmitting} disabled={!isFormValid}>
           {buttonLabel}
         </Button>
       </ButtonContainer>

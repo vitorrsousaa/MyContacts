@@ -26,6 +26,11 @@ export default styled.input<InputProps>`
     border-color: ${({ theme }) => theme.colors.primary.main};
   }
 
+  &[disabled] {
+    background-color: ${({ theme }) => theme.colors.gray.lighter};
+    border-color: ${({ theme }) => theme.colors.gray.light};
+  }
+
   ${({ theme, error }) =>
     error &&
     css`
