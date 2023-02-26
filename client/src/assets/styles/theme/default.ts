@@ -19,5 +19,8 @@ export const theme: DefaultTheme = {
       dark: '#F63131',
       light: '#F97171',
     },
+    success: {
+      main: '#51ca73',
+    },
   },
 };
