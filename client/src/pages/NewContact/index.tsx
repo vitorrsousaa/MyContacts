@@ -2,6 +2,7 @@ import ContactForm from '../../components/ContactForm';
 import PageHeader from '../../components/PageHeader';
 import ToastContainer from '../../components/Toast/ToastContainer';
 import ContactsService, { ContactData } from '../../services/ContactsService';
+import toast from '../../utils/format';
 
 export interface FormData {
   name: string;
@@ -20,11 +21,17 @@ const NewContact = () => {
         category_id: formData.categoryId,
       };
 
-      const response = await ContactsService.createContact(contact);
+      await ContactsService.createContact(contact);
 
-      console.log(response);
+      toast({
+        type: 'success',
+        text: 'Contato cadastrado',
+      });
     } catch {
-      alert('Ocorreu um erro');
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao cadastrar o contato',
+      });
     }
   }
   return (
