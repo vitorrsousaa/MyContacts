@@ -32,7 +32,7 @@ export const Container = styled.div<ContainerProps>`
   & + & {
     margin-top: 12px;
   }
-  strong {
-    margin-left: 8px;
+  img {
+    margin-right: 8px;
   }
 `;

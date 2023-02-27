@@ -1,5 +1,6 @@
 import ContactForm from '../../components/ContactForm';
 import PageHeader from '../../components/PageHeader';
+import ToastContainer from '../../components/Toast/ToastContainer';
 import ContactsService, { ContactData } from '../../services/ContactsService';
 
 export interface FormData {
@@ -28,6 +29,7 @@ const NewContact = () => {
   }
   return (
     <>
+      <ToastContainer />
       <PageHeader title="Novo Contato" />
       <ContactForm buttonLabel="Cadastrar" onSubmit={handleSubmit} />
     </>
