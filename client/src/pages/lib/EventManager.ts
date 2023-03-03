@@ -1,11 +1,15 @@
+interface EventMap {
+  [key: string]: unknown[];
+}
+
 export default class EventManager {
-  listeners;
+  private listeners: EventMap;
 
   constructor() {
     this.listeners = {};
   }
 
-  on(event: string, listener: () => void) {
+  on<T extends unknown[]>(event: string, listener: (...arg: T) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -13,13 +17,13 @@ export default class EventManager {
     this.listeners[event].push(listener);
   }
 
-  emit(event: string, payload) {
+  emit<T extends unknown[]>(event: string, ...args: T) {
     if (!this.listeners[event]) {
       return;
     }
 
     this.listeners[event].forEach((listener) => {
-      listener(payload);
+      listener(args);
     });
   }
 }
