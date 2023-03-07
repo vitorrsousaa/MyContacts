@@ -1,5 +1,5 @@
 interface EventMap {
-  [key: string]: unknown[];
+  [key: string]: Function[];
 }
 
 export default class EventManager {
@@ -23,7 +23,18 @@ export default class EventManager {
     }
 
     this.listeners[event].forEach((listener) => {
-      listener(args);
+      listener(...args);
     });
+  }
+
+  removeListener(event: string, listenerToRemove: Function) {
+    const listeners = this.listeners[event];
+
+    if (!listeners) {
+      return;
+    }
+
+    const filteredListeners = listeners.filter((listener) => listener !== listenerToRemove);
+    this.listeners[event] = filteredListeners;
   }
 }

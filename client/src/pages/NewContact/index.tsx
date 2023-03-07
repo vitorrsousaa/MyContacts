@@ -1,8 +1,8 @@
 import ContactForm from '../../components/ContactForm';
 import PageHeader from '../../components/PageHeader';
 import ToastContainer from '../../components/Toast/ToastContainer';
-import ContactsService, { ContactData } from '../../services/ContactsService';
-import toast from '../../utils/format';
+import ContactsService from '../../services/ContactsService';
+import toast from '../../utils/toast';
 
 export interface FormData {
   name: string;
