@@ -8,16 +8,20 @@ export interface ContactData {
 }
 
 class ContactsService {
-  httpClient;
+  private httpClient;
   constructor() {
     this.httpClient = new HttpClient('http://localhost:3000');
   }
 
-  async listContacts(orderBy = 'asc') {
+  listContacts(orderBy = 'asc') {
     return this.httpClient.get(`/contacts/?orderBy=${orderBy}`);
   }
 
-  async createContact(contact: ContactData) {
+  getContactById(id: string) {
+    return this.httpClient.get(`/contacts/${id}`);
+  }
+
+  createContact(contact: ContactData) {
     return this.httpClient.post('/contacts', contact);
   }
 }
