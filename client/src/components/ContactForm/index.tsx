@@ -81,6 +81,10 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
     await onSubmit({ name, email, phone: phone.replace(/\D/g, ''), categoryId });
 
     setIsSubmitting(false);
+    setName('');
+    setCategoryId('');
+    setEmail('');
+    setPhone('');
   }
 
   return (

@@ -26,6 +26,7 @@ const NewContact = () => {
       toast({
         type: 'success',
         text: 'Contato cadastrado',
+        duration: 8000,
       });
     } catch {
       toast({
