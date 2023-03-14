@@ -28,6 +28,7 @@ interface Category {
   name: string;
 }
 
+// eslint-disable-next-line react/display-name
 const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -61,6 +62,10 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref
         setEmail(contact.email ?? '');
         setPhone(formatPhone(contact.phone));
         setCategoryId(contact.category_id ?? '');
+      },
+      resetFields: () => {
+        setName('');
+        setEmail('');
       },
     }),
     []
@@ -114,10 +119,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref
     await onSubmit({ name, email, phone: phone.replace(/\D/g, ''), categoryId });
 
     setIsSubmitting(false);
-    setName('');
-    setCategoryId('');
-    setEmail('');
-    setPhone('');
   }
 
   return (

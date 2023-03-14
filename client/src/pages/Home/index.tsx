@@ -97,7 +97,13 @@ const Home = () => {
   return (
     <>
       <Loader isLoading={isLoading} />
-      {/* <Modal danger /> */}
+      <Modal
+        title="Você tem certeza que deseja remover o contato 'Joaquim fernandes'?"
+        subtitle="Essa ação não pode ser desfeita"
+        danger
+        onCancel={() => alert('cancelou')}
+        onDelete={() => alert('deletar')}
+      />
       <Container>
         {contacts.length > 0 && (
           <InputSearchContainer>

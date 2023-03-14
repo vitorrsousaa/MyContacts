@@ -5,9 +5,20 @@ import { Overlay, Container, Footer } from './styles';
 interface ModalProps {
   danger?: boolean;
   containerId?: string;
+  title: string;
+  subtitle: string;
+  onCancel: () => void;
+  onDelete: () => void;
 }
 
-const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
+const Modal = ({
+  danger = false,
+  containerId = 'modal-root',
+  title,
+  subtitle,
+  onCancel,
+  onDelete,
+}: ModalProps) => {
   let container = document.getElementById(containerId);
 
   if (!container) {
@@ -19,13 +30,13 @@ const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
   return ReactDOM.createPortal(
     <Overlay>
       <Container danger={danger}>
-        <h1>Título do modal</h1>
-        <p>Desripão</p>
+        <h1>{title}</h1>
+        <p>{subtitle}</p>
         <Footer>
-          <button type="button" className="cancel-button">
+          <button type="button" className="cancel-button" onClick={onCancel}>
             Cancelar
           </button>
-          <Button type="button" danger={danger}>
+          <Button type="button" danger={danger} onClick={onDelete}>
             Deletar
           </Button>
         </Footer>

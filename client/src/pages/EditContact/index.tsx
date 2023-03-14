@@ -45,7 +45,7 @@ const EditContact = () => {
     }
 
     loadContact();
-  }, [id]);
+  }, [history, id]);
 
   async function handleSubmit(formData: FormData) {
     try {
