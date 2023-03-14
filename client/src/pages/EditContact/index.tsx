@@ -7,12 +7,20 @@ import ContactsService from '../../services/ContactsService';
 import { ContactAPI } from '../../types/Contact';
 import toast from '../../utils/toast';
 
+export interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  categoryId: string;
+}
+
 interface ContactFormRef {
   setFieldsValues: (contact: ContactAPI) => void;
 }
 
 const EditContact = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [contactName, setContactName] = useState('');
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const contactFormRef = useRef<ContactFormRef>(null);
@@ -26,6 +34,7 @@ const EditContact = () => {
         contactFormRef.current?.setFieldsValues(contactData);
 
         setIsLoading(false);
+        setContactName(contactData.name);
       } catch {
         history.push('/');
         toast({
@@ -38,15 +47,37 @@ const EditContact = () => {
     loadContact();
   }, [id]);
 
-  function handleSubmit() {
-    //
+  async function handleSubmit(formData: FormData) {
+    try {
+      const contact = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        category_id: formData.categoryId,
+      };
+
+      const contactData = await ContactsService.updateContact(id, contact);
+
+      setContactName(contactData.name);
+
+      toast({
+        type: 'success',
+        text: 'Contato editado com sucesso',
+        duration: 8000,
+      });
+    } catch {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao editar o contato',
+      });
+    }
   }
 
   return (
     <>
       <Loader isLoading={isLoading} />
-      <PageHeader title="Editar Mateus Silva" />
-      <ContactForm buttonLabel="Salvar alterações" ref={contactFormRef} />
+      <PageHeader title={isLoading ? 'Carregando...' : `Editar ${contactName}`} />
+      <ContactForm buttonLabel="Salvar alterações" ref={contactFormRef} onSubmit={handleSubmit} />
     </>
   );
 };

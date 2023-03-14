@@ -58,9 +58,9 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref
     () => ({
       setFieldsValues: (contact: ContactAPI) => {
         setName(contact.name);
-        setEmail(contact.email);
-        setPhone(contact.phone);
-        setCategoryId(contact.category_id);
+        setEmail(contact.email ?? '');
+        setPhone(formatPhone(contact.phone));
+        setCategoryId(contact.category_id ?? '');
       },
     }),
     []

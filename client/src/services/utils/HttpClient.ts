@@ -25,6 +25,13 @@ class HttpClient {
     });
   }
 
+  put(path: string, body: unknown) {
+    return this.makeRequest(path, {
+      method: 'PUT',
+      body,
+    });
+  }
+
   async makeRequest(path: string, options: optionsProps) {
     await delay(1000);
 
