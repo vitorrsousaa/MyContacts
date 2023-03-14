@@ -1,4 +1,10 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+import React, {
+  BaseSyntheticEvent,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import useErrors from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
 import { FormData } from '../../pages/NewContact';
@@ -10,6 +16,7 @@ import Input from '../Input';
 import Select from '../Select';
 import { Form, ButtonContainer } from './styles';
 import Button from '../Button';
+import { ContactAPI } from '../../types/Contact';
 
 interface ContactFormProps {
   buttonLabel: string;
@@ -21,7 +28,7 @@ interface Category {
   name: string;
 }
 
-const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
+const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,6 +39,32 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
   const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors();
 
   const isFormValid = name && errors.length === 0;
+
+  // Primeira forma de encaminhar as refs
+  // useEffect(() => {
+  //   const refObject = ref
+  // refObject.current = {
+  //   setFieldsValues: (contact:ContactAPI) => {
+  //     setName(contact.name)
+  //     setEmail(contact.email)
+  //     setPhone(contact.phone)
+  //     setCategoryId(contact.category_id)
+  //   }
+  // }
+  // }, [])
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setFieldsValues: (contact: ContactAPI) => {
+        setName(contact.name);
+        setEmail(contact.email);
+        setPhone(contact.phone);
+        setCategoryId(contact.category_id);
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     async function loadCategories() {
@@ -141,6 +174,6 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
       </ButtonContainer>
     </Form>
   );
-};
+});
 
 export default ContactForm;
