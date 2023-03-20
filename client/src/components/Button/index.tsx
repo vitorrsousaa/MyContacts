@@ -6,6 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   disabled?: boolean;
   children: ReactNode;
+  danger?: boolean;
 }
 
 export default function Button({ isLoading, disabled, children, ...props }: ButtonProps) {
