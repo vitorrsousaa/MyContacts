@@ -6,6 +6,7 @@ interface ModalProps {
   danger?: boolean;
   containerId?: string;
   isOpen: boolean;
+  isLoading: boolean;
   title: string;
   onCancel: () => void;
   onConfirm: () => void;
@@ -15,6 +16,7 @@ const Modal = ({
   danger = false,
   containerId = 'modal-root',
   title,
+  isLoading,
   isOpen,
   onCancel,
   onConfirm,
@@ -37,10 +39,10 @@ const Modal = ({
         <h1>{title}</h1>
         <p>Essa ação não pode ser desfeita!</p>
         <Footer>
-          <button type="button" className="cancel-button" onClick={onCancel}>
+          <button type="button" className="cancel-button" onClick={onCancel} disabled={isLoading}>
             Cancelar
           </button>
-          <Button type="button" danger={danger} onClick={onConfirm}>
+          <Button type="button" danger={danger} onClick={onConfirm} isLoading={isLoading}>
             Deletar
           </Button>
         </Footer>

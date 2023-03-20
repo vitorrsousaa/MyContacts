@@ -22,6 +22,7 @@ import { BaseSyntheticEvent, useCallback, useEffect, useMemo, useState } from 'r
 import ContactsService from '../../services/ContactsService';
 
 import Button from '../../components/Button';
+import toast from '../../utils/toast';
 
 interface Contact {
   name: string;
@@ -39,7 +40,8 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
-  const [contactBeingDeleted, setContactBeingDeleted] = useState<Contact | null>(null);
+  const [contactBeingDeleted, setContactBeingDeleted] = useState<Contact>({} as Contact);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
   const filteredContacts = useMemo(
     () =>
@@ -103,9 +105,31 @@ const Home = () => {
 
   function handleOnCloseModal() {
     setIsModalDeleteVisible(false);
+    setContactBeingDeleted(null);
   }
 
-  function handleConfirmDeleteContact() {}
+  async function handleConfirmDeleteContact() {
+    try {
+      setIsLoadingDelete(true);
+      await ContactsService.delete(contactBeingDeleted.id);
+
+      toast({
+        type: 'success',
+        text: 'Contato deletado com sucesso',
+      });
+      handleOnCloseModal();
+      setContacts((prevState) =>
+        prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
+      );
+    } catch {
+      toast({
+        type: 'danger',
+        text: 'Tivemos um erro para deletar o contato',
+      });
+    } finally {
+      setIsLoadingDelete(false);
+    }
+  }
 
   return (
     <>
@@ -116,6 +140,7 @@ const Home = () => {
         title={`Você tem certeza que deseja deletar o contato '${contactBeingDeleted?.name}' ?`}
         onCancel={handleOnCloseModal}
         onConfirm={handleConfirmDeleteContact}
+        isLoading={isLoadingDelete}
       />
       <Container>
         {contacts.length > 0 && (
