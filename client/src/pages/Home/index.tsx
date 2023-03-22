@@ -40,7 +40,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
-  const [contactBeingDeleted, setContactBeingDeleted] = useState<Contact>({} as Contact);
+  const [contactBeingDeleted, setContactBeingDeleted] = useState<Contact | null>({} as Contact);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
   const filteredContacts = useMemo(
@@ -110,17 +110,16 @@ const Home = () => {
 
   async function handleConfirmDeleteContact() {
     try {
+      const contactID = contactBeingDeleted?.id || '';
       setIsLoadingDelete(true);
-      await ContactsService.delete(contactBeingDeleted.id);
+      await ContactsService.delete(contactID);
 
       toast({
         type: 'success',
         text: 'Contato deletado com sucesso',
       });
       handleOnCloseModal();
-      setContacts((prevState) =>
-        prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
-      );
+      setContacts((prevState) => prevState.filter((contact) => contact.id !== contactID));
     } catch {
       toast({
         type: 'danger',
