@@ -55,15 +55,8 @@ const EditContact = () => {
     loadContact();
   }, [id, safeAsyncAction, history]);
 
-  async function handleSubmit(formData: FormData) {
+  async function handleSubmit(contact: FormData) {
     try {
-      const contact = {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        category_id: formData.categoryId,
-      };
-
       const contactData = await ContactsService.updateContact(id, contact);
 
       setContactName(contactData.name);

@@ -1,6 +1,7 @@
 import delay from '../../utils/delay';
 import APIError from '../../errors/APIError';
 import { ContactData } from '../ContactsService';
+import { domainContact, persistanceContact } from '../../types/Contact';
 
 interface optionsProps {
   method: string;
@@ -18,7 +19,7 @@ class HttpClient {
     return this.makeRequest(path, { method: 'GET' });
   }
 
-  post(path: string, body: ContactData) {
+  post(path: string, body: persistanceContact) {
     return this.makeRequest(path, {
       method: 'POST',
       body,

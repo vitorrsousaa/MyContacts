@@ -2,6 +2,7 @@ import ContactForm from '../../components/ContactForm';
 import PageHeader from '../../components/PageHeader';
 import ToastContainer from '../../components/Toast/ToastContainer';
 import ContactsService from '../../services/ContactsService';
+import ContactMapper from '../../services/mappers/ContactMapper';
 import toast from '../../utils/toast';
 
 export interface FormData {
@@ -12,15 +13,8 @@ export interface FormData {
 }
 
 const NewContact = () => {
-  async function handleSubmit(formData: FormData) {
+  async function handleSubmit(contact: FormData) {
     try {
-      const contact = {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        category_id: formData.categoryId,
-      };
-
       await ContactsService.createContact(contact);
 
       toast({
