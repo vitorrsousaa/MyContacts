@@ -12,15 +12,7 @@ interface ModalProps {
   onConfirm: () => void;
 }
 
-const Modal = ({
-  danger = false,
-  containerId = 'modal-root',
-  title,
-  isLoading,
-  isOpen,
-  onCancel,
-  onConfirm,
-}: ModalProps) => {
+const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
   let container = document.getElementById(containerId);
 
   if (!isOpen) {
@@ -42,7 +34,7 @@ const Modal = ({
           <button type="button" className="cancel-button" onClick={onCancel} disabled={isLoading}>
             Cancelar
           </button>
-          <Button type="button" danger={danger} onClick={onConfirm} isLoading={isLoading}>
+          <Button type="button" danger={danger}>
             Deletar
           </Button>
         </Footer>
