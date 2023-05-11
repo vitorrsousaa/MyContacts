@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import ContactForm from '../../components/ContactForm';
 import Loader from '../../components/Loader';
 import PageHeader from '../../components/PageHeader';
+import useIsMounted from '../../hooks/useIsMounted';
+import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 import ContactsService from '../../services/ContactsService';
 import { ContactAPI } from '../../types/Contact';
 import toast from '../../utils/toast';
@@ -24,6 +26,7 @@ const EditContact = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const contactFormRef = useRef<ContactFormRef>(null);
+  const safeAsyncAction = useSafeAsyncAction();
 
   useEffect(() => {
     async function loadContact() {
@@ -31,21 +34,26 @@ const EditContact = () => {
         const contactData = await ContactsService.getContactById(id);
 
         // Primeira forma de encaminhar as refs
-        contactFormRef.current?.setFieldsValues(contactData);
 
-        setIsLoading(false);
-        setContactName(contactData.name);
+        safeAsyncAction(() => {
+          contactFormRef.current?.setFieldsValues(contactData);
+
+          setIsLoading(false);
+          setContactName(contactData.name);
+        });
       } catch {
-        history.push('/');
-        toast({
-          type: 'danger',
-          text: 'Contato não encontrado',
+        safeAsyncAction(() => {
+          history.push('/');
+          toast({
+            type: 'danger',
+            text: 'Contato não encontrado',
+          });
         });
       }
     }
 
     loadContact();
-  }, [history, id]);
+  }, [id, safeAsyncAction, history]);
 
   async function handleSubmit(formData: FormData) {
     try {

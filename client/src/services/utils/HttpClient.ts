@@ -31,6 +31,11 @@ class HttpClient {
       body,
     });
   }
+  delete(path: string) {
+    return this.makeRequest(path, {
+      method: 'DELETE',
+    });
+  }
 
   async makeRequest(path: string, options: optionsProps) {
     await delay(1000);

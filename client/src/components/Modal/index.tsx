@@ -5,21 +5,19 @@ import { Overlay, Container, Footer } from './styles';
 interface ModalProps {
   danger?: boolean;
   containerId?: string;
+  isOpen: boolean;
+  isLoading: boolean;
   title: string;
-  subtitle: string;
   onCancel: () => void;
-  onDelete: () => void;
+  onConfirm: () => void;
 }
 
-const Modal = ({
-  danger = false,
-  containerId = 'modal-root',
-  title,
-  subtitle,
-  onCancel,
-  onDelete,
-}: ModalProps) => {
+const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
   let container = document.getElementById(containerId);
+
+  if (!isOpen) {
+    return null;
+  }
 
   if (!container) {
     container = document.createElement('div');
@@ -31,12 +29,12 @@ const Modal = ({
     <Overlay>
       <Container danger={danger}>
         <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <p>Essa ação não pode ser desfeita!</p>
         <Footer>
-          <button type="button" className="cancel-button" onClick={onCancel}>
+          <button type="button" className="cancel-button" onClick={onCancel} disabled={isLoading}>
             Cancelar
           </button>
-          <Button type="button" danger={danger} onClick={onDelete}>
+          <Button type="button" danger={danger}>
             Deletar
           </Button>
         </Footer>
