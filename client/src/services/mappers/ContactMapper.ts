@@ -3,6 +3,7 @@ import { domainContact, persistanceContact } from '../../types/Contact';
 class ContactMapper {
   toPersistance(domainContact: domainContact): persistanceContact {
     return {
+      id: domainContact.id,
       name: domainContact.name,
       phone: domainContact.phone,
       email: domainContact.email,
