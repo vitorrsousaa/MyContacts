@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import Button from '../Button';
 import { Overlay, Container, Footer } from './styles';
+import { useEffect, useState } from 'react';
 
 interface ModalProps {
   danger?: boolean;
@@ -12,10 +13,37 @@ interface ModalProps {
   onConfirm: () => void;
 }
 
-const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
+const Modal = ({
+  danger = false,
+  containerId = 'modal-root',
+  isOpen,
+  isLoading,
+  onCancel,
+  onConfirm,
+  title,
+}: ModalProps) => {
+  const [shouldRender, setShouldRender] = useState(isOpen);
   let container = document.getElementById(containerId);
 
-  if (!isOpen) {
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+    }
+
+    let timeoutId: number;
+
+    if (!isOpen) {
+      timeoutId = setTimeout(() => {
+        setShouldRender(false);
+      }, 300);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [isOpen]);
+
+  if (!shouldRender) {
     return null;
   }
 
@@ -26,15 +54,15 @@ const Modal = ({ danger = false, containerId = 'modal-root' }: ModalProps) => {
   }
 
   return ReactDOM.createPortal(
-    <Overlay>
-      <Container danger={danger}>
+    <Overlay isLeaving={!isOpen}>
+      <Container danger={danger} isLeaving={!isOpen}>
         <h1>{title}</h1>
         <p>Essa ação não pode ser desfeita!</p>
         <Footer>
           <button type="button" className="cancel-button" onClick={onCancel} disabled={isLoading}>
             Cancelar
           </button>
-          <Button type="button" danger={danger}>
+          <Button type="button" danger={danger} onClick={onConfirm}>
             Deletar
           </Button>
         </Footer>

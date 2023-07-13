@@ -105,7 +105,6 @@ const Home = () => {
 
   function handleOnCloseModal() {
     setIsModalDeleteVisible(false);
-    setContactBeingDeleted(null);
   }
 
   async function handleConfirmDeleteContact() {
