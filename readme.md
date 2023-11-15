@@ -38,20 +38,20 @@ Tecnologias e ferramentas utilizadas no desenvolvimento do projeto:
 
 #### **Website** ( [ReactJS](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) )
 
--  [StyledComponents](https://styled-components.com/)
--  [React Router Dom](https://reactrouter.com/en/main)
+- [StyledComponents](https://styled-components.com/)
+- [React Router Dom](https://reactrouter.com/en/main)
 
 #### **API** ( [NodeJS](https://nodejs.org/en/) + [TypeScript](https://www.typescriptlang.org/) )
 
--  [Express](https://expressjs.com/pt-br/)
+- [Express](https://expressjs.com/pt-br/)
 
 #### **Utilitários**
 
--  Protótipo: **[Figma](https://www.figma.com/)** → **[Protótipo (MyContacts)](https://www.figma.com/file/ImPnxNEktRKLcNxylyBtU0/MyContacts)**
--  Editor: **[Visual Studio Code](https://code.visualstudio.com/)** → Extensions: **[Prettier](https://prettier.io/)** + **[EditorConfig](https://editorconfig.org/)**
--  Fontes: **[General Sans](https://fonts.google.com/specimen/Sora)**
--  Versionamento: **[Git](https://git-scm.com)**
--  Padronização de código: **[ESLint](https://eslint.org/)**
+- Protótipo: **[Figma](https://www.figma.com/)** → **[Protótipo (MyContacts)](https://www.figma.com/file/ImPnxNEktRKLcNxylyBtU0/MyContacts)**
+- Editor: **[Visual Studio Code](https://code.visualstudio.com/)** → Extensions: **[Prettier](https://prettier.io/)** + **[EditorConfig](https://editorconfig.org/)**
+- Fontes: **[General Sans](https://fonts.google.com/specimen/Sora)**
+- Versionamento: **[Git](https://git-scm.com)**
+- Padronização de código: **[ESLint](https://eslint.org/)**
 
 <br />
 
@@ -80,19 +80,19 @@ E a última rota é para realizar modificões em um contato já existe, através
 Afim de facilitar a organização e manutenção do código, foi definido um padrão e modularização para organização das pastas neste projeto.
 
 **Front-end Web**
-Todo o código responsável por carregar a aplicação Front-end esta armazenado dentro da pasta client
-→ assets: Contém a estilização global, icones, tema da aplicação, itens de estilo que são reutilizáveis e imagens;
-→ components: Contém todos os componentes globais do projeto;
-→ hooks: Contém todos os custom hooks criados para usabilidade da aplicação;
-→ pages: Contém todos os componentes responsáveis por carregar cada página da aplicação;
-→ utils: Contém funções que são utilizadas repetidas vezes na aplicação;
-→ services: Contém as camadas de abstração para service layer de cada entidade da aplicação;
+Todo o código responsável por carregar a aplicação Front-end esta armazenado dentro da pasta client. <br />
+→ assets: Contém a estilização global, icones, tema da aplicação, itens de estilo que são reutilizáveis e imagens;<br />
+→ components: Contém todos os componentes globais do projeto;<br />
+→ hooks: Contém todos os custom hooks criados para usabilidade da aplicação;<br />
+→ pages: Contém todos os componentes responsáveis por carregar cada página da aplicação;<br />
+→ utils: Contém funções que são utilizadas repetidas vezes na aplicação;<br />
+→ services: Contém as camadas de abstração para service layer de cada entidade da aplicação;<br />
 
 **Back-end**
-Todo o código responsável por carregar a aplicação Back-end esta armazenado dentro da pasta api
-→ controllers: Os controllers são repsonsáveis por armazenar a regra de negócio da aplicação, realizando a integração da View com o DataSource através do Repository.
-→ repositories: Os repositories são uma camada de abstração para acesso ao DataSource. Ele é responsável por lidar com as solicitações do controller para comunicação com o dataSource
-→ middlewares: Os middlewares são responsáveis por interceptar a Request antes de chegar no Controller. E além disso, o middleware consegue alterar o lifeCycle da aplicação, deixando a Request seguir o lifeCycle ou encaminhar para outro local
+Todo o código responsável por carregar a aplicação Back-end esta armazenado dentro da pasta api. <br />
+→ controllers: Os controllers são repsonsáveis por armazenar a regra de negócio da aplicação, realizando a integração da View com o DataSource através do Repository;<br />
+→ repositories: Os repositories são uma camada de abstração para acesso ao DataSource. Ele é responsável por lidar com as solicitações do controller para comunicação com o dataSource.<br />
+→ middlewares: Os middlewares são responsáveis por interceptar a Request antes de chegar no Controller. E além disso, o middleware consegue alterar o lifeCycle da aplicação, deixando a Request seguir o lifeCycle ou encaminhar para outro local. <br />
 
 ## 🚀 Como executar o projeto
 
