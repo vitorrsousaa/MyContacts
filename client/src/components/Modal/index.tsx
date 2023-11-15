@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import Button from '../Button';
 import { Overlay, Container, Footer } from './styles';
-import { useEffect, useRef, useState } from 'react';
+import useAnimatedUnmounted from '../../hooks/useAnimatedUnmounted';
 
 interface ModalProps {
   danger?: boolean;
@@ -22,30 +22,9 @@ const Modal = ({
   onConfirm,
   title,
 }: ModalProps) => {
-  const [shouldRender, setShouldRender] = useState(isOpen);
-  const overlayRef = useRef<HTMLDivElement>(null);
   let container = document.getElementById(containerId);
 
-  useEffect(() => {
-    if (isOpen) {
-      setShouldRender(true);
-    }
-
-    function handleAnimationEnd() {
-      setShouldRender(false);
-    }
-
-    const overlayRefElement = overlayRef.current;
-    if (!isOpen && overlayRefElement) {
-      overlayRef.current?.addEventListener('animationend', handleAnimationEnd);
-    }
-
-    return () => {
-      if (overlayRefElement) {
-        overlayRefElement.removeEventListener('animationend', handleAnimationEnd);
-      }
-    };
-  }, [isOpen]);
+  const { shouldRender, animatedRef } = useAnimatedUnmounted(isOpen);
 
   if (!shouldRender) {
     return null;
@@ -58,7 +37,7 @@ const Modal = ({
   }
 
   return ReactDOM.createPortal(
-    <Overlay isLeaving={!isOpen} ref={overlayRef}>
+    <Overlay isLeaving={!isOpen} ref={animatedRef}>
       <Container danger={danger} isLeaving={!isOpen}>
         <h1>{title}</h1>
         <p>Essa ação não pode ser desfeita!</p>
