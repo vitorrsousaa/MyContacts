@@ -79,7 +79,7 @@ E a última rota é para realizar modificões em um contato já existe, através
 
 Afim de facilitar a organização e manutenção do código, foi definido um padrão e modularização para organização das pastas neste projeto.
 
-**Front-end Web**
+**Front-end Web** <br />
 Todo o código responsável por carregar a aplicação Front-end esta armazenado dentro da pasta client. <br />
 → assets: Contém a estilização global, icones, tema da aplicação, itens de estilo que são reutilizáveis e imagens;<br />
 → components: Contém todos os componentes globais do projeto;<br />
@@ -88,7 +88,7 @@ Todo o código responsável por carregar a aplicação Front-end esta armazenado
 → utils: Contém funções que são utilizadas repetidas vezes na aplicação;<br />
 → services: Contém as camadas de abstração para service layer de cada entidade da aplicação;<br />
 
-**Back-end**
+**Back-end** <br />
 Todo o código responsável por carregar a aplicação Back-end esta armazenado dentro da pasta api. <br />
 → controllers: Os controllers são repsonsáveis por armazenar a regra de negócio da aplicação, realizando a integração da View com o DataSource através do Repository;<br />
 → repositories: Os repositories são uma camada de abstração para acesso ao DataSource. Ele é responsável por lidar com as solicitações do controller para comunicação com o dataSource.<br />
