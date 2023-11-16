@@ -1,8 +1,19 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 interface ContainerProps {
   type: 'danger' | 'success' | 'default';
 }
+
+const messageIn = keyframes`
+from {
+  opacity: 0;
+  transform: translateY(100px);
+}
+to{
+  opacity: 1;
+  transform: translateY(0px);
+}
+`;
 
 const containerVariants = {
   default: css`
@@ -29,6 +40,8 @@ export const Container = styled.div<ContainerProps>`
   justify-content: center;
 
   ${({ type }) => containerVariants[type] || containerVariants.default}
+
+  animation: ${messageIn} 0.5s;
 
   & + & {
     margin-top: 12px;

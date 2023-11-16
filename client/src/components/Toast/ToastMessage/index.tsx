@@ -24,7 +24,7 @@ export default function ToastMessage({ message, onRemove }: ToastMessageProps) {
     return () => {
       clearTimeout(timeOutId);
     };
-  }, [onRemove, message]);
+  }, [onRemove, message, duration]);
 
   function handleRemoveToast() {
     onRemove(id);
