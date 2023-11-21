@@ -56,12 +56,12 @@ export const Overlay = styled.div<{ isLeaving: boolean }>`
   align-items: center;
   justify-content: center;
 
-  animation: ${fadeIn} 0.3s;
+  animation: ${fadeIn} 0.3s forwards;
 
   ${({ isLeaving }) =>
     isLeaving &&
     css`
-      animation: ${fadeOut} 0.3s;
+      animation: ${fadeOut} 0.3s forward;
     `}
 `;
 

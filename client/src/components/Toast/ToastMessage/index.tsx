@@ -11,9 +11,10 @@ interface ToastMessageProps {
     type?: 'danger' | 'success' | 'default';
     duration?: number;
   };
+  isLeaving: boolean;
 }
 
-export default function ToastMessage({ message, onRemove }: ToastMessageProps) {
+export default function ToastMessage({ message, onRemove, isLeaving }: ToastMessageProps) {
   const { text, type = 'default', id, duration } = message;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function ToastMessage({ message, onRemove }: ToastMessageProps) {
     onRemove(id);
   }
   return (
-    <Container type={type} onClick={handleRemoveToast}>
+    <Container type={type} onClick={handleRemoveToast} isLeaving={isLeaving}>
       {type === 'danger' && <img src={xCircleIcon} alt="danger" />}
       {type === 'success' && <img src={checkCircleIcon} alt="success" />}
       <strong>{text}</strong>

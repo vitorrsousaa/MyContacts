@@ -2,17 +2,29 @@ import styled, { css, keyframes } from 'styled-components';
 
 interface ContainerProps {
   type: 'danger' | 'success' | 'default';
+  isLeaving: boolean;
 }
 
 const messageIn = keyframes`
-from {
-  opacity: 0;
-  transform: translateY(100px);
-}
-to{
-  opacity: 1;
-  transform: translateY(0px);
-}
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+const messageOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  to{
+    opacity: 0;
+    transform: translateY(100px);
+  }
 `;
 
 const containerVariants = {
@@ -49,4 +61,10 @@ export const Container = styled.div<ContainerProps>`
   img {
     margin-right: 8px;
   }
+
+  ${({ isLeaving }) =>
+    isLeaving &&
+    css`
+      animation: ${messageOut} 0.5s forwards;
+    `}
 `;
