@@ -12,34 +12,34 @@ interface ToastMessageProps {
     duration?: number;
   };
   isLeaving: boolean;
-  onAnimationEnd: (id: number) => void;
+  animatedRef: unknown;
 }
 
 export default function ToastMessage({
   message,
   onRemove,
   isLeaving,
-  onAnimationEnd,
+  animatedRef,
 }: ToastMessageProps) {
   const { text, type = 'default', id, duration } = message;
 
-  const animatedRef = useRef<HTMLDivElement>(null);
+  // const animatedRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleAnimationEnd() {
-      onAnimationEnd(message.id);
-    }
+  // useEffect(() => {
+  //   function handleAnimationEnd() {
+  //     onAnimationEnd(message.id);
+  //   }
 
-    const elementRef = animatedRef.current;
+  //   const elementRef = animatedRef.current;
 
-    if (isLeaving) {
-      elementRef?.addEventListener('animationend', handleAnimationEnd);
-    }
+  //   if (isLeaving) {
+  //     elementRef?.addEventListener('animationend', handleAnimationEnd);
+  //   }
 
-    return () => {
-      elementRef?.removeEventListener('animationend', handleAnimationEnd);
-    };
-  }, [isLeaving, message.id, onAnimationEnd]);
+  //   return () => {
+  //     elementRef?.removeEventListener('animationend', handleAnimationEnd);
+  //   };
+  // }, [isLeaving, message.id, onAnimationEnd]);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
