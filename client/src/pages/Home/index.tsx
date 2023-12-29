@@ -1,4 +1,12 @@
 import {
+  BaseSyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useDeferredValue,
+} from 'react';
+import {
   Card,
   Container,
   EmptyListContainer,
@@ -18,7 +26,6 @@ import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
-import { BaseSyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import ContactsService from '../../services/ContactsService';
 
 import Button from '../../components/Button';
@@ -36,19 +43,21 @@ interface Contact {
 const Home = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [orderBy, setOrderBy] = useState('asc');
-  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] = useState<Contact | null>({} as Contact);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const deferredSearchTerm = useDeferredValue(searchTerm);
 
   const filteredContacts = useMemo(
     () =>
       contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+        contact.name.toLowerCase().includes(deferredSearchTerm.toLocaleLowerCase())
       ),
-    [contacts, searchTerm]
+    [contacts, deferredSearchTerm]
   );
   const loadContacts = useCallback(async () => {
     try {
