@@ -72,9 +72,10 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref
   );
 
   useEffect(() => {
+    const controller = new AbortController();
     async function loadCategories() {
       try {
-        const categoriesList = await CategoriesService.listCategories();
+        const categoriesList = await CategoriesService.listCategories(controller.signal);
 
         setCategories(categoriesList);
       } catch {
@@ -85,6 +86,10 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }: ContactFormProps, ref
     }
 
     loadCategories();
+
+    () => {
+      controller.abort();
+    };
   }, []);
 
   function handleNameChange(event: BaseSyntheticEvent) {

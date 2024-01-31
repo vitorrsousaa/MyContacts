@@ -4,8 +4,9 @@ import { ContactData } from '../ContactsService';
 import { domainContact, persistanceContact } from '../../types/Contact';
 
 interface optionsProps {
-  method: string;
+  method?: string;
   body?: any;
+  signal?: AbortSignal;
 }
 
 class HttpClient {
@@ -15,8 +16,8 @@ class HttpClient {
     this.baseURL = baseURL;
   }
 
-  get(path: string) {
-    return this.makeRequest(path, { method: 'GET' });
+  get(path: string, options?: optionsProps) {
+    return this.makeRequest(path, { ...options, method: 'GET' });
   }
 
   post(path: string, body: persistanceContact) {
@@ -51,6 +52,7 @@ class HttpClient {
       method: options.method,
       body: JSON.stringify(options.body),
       headers,
+      signal: options.signal,
     });
 
     let responseBody = null;
